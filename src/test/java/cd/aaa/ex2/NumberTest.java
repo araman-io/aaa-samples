@@ -3,7 +3,8 @@ package cd.aaa.ex2;
 import org.junit.Test;
 import org.mockito.InOrder;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import cd.aaa.ex2.Number;
 import cd.aaa.ex2.resolver.CroreResolver;
@@ -13,12 +14,6 @@ import cd.aaa.ex2.resolver.Resolver;
 import cd.aaa.ex2.resolver.TensAndUnitsResolver;
 import cd.aaa.ex2.resolver.TensResolver;
 import cd.aaa.ex2.resolver.ThousandResolver;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class NumberTest {
 
@@ -79,5 +74,13 @@ public class NumberTest {
     verify(tR, times(1)).getDenomination();
     verify(tauR, times(1)).getUnits(50);
     verify(tauR, never()).getDenomination();
+  }
+  
+  @Test
+  public void testSpy() {
+    Resolver r = new TensResolver();
+    Resolver spy = spy(r);
+    when(spy.getUnits(anyInt())).thenReturn(66);
+    System.out.println(spy.getUnits(876));
   }
 }

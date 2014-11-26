@@ -1,7 +1,6 @@
 package cd.aaa.ex2.resolver;
 
 import org.junit.Test;
-
 import static org.junit.Assert.*;
 
 import cd.aaa.ex2.resolver.Resolver;
@@ -34,6 +33,12 @@ public class TensResolverTest {
   @Test
   public void shouldReturnEmptyStringAsDenominationString() {
     assertEquals("", r.getDenomination());
+  }
+  
+  @Test
+  public void testSpy() {
+    
+    
   }
 
 }
