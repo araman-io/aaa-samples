@@ -9,7 +9,7 @@ import cd.aaa.classifier.ClassifierTest;
 import cd.aaa.number.NumberTestSuite;
 
 @RunWith(Suite.class)
-@SuiteClasses({NumberTestSuite.class, BowlingGameTestSuite.class, ClassifierTest.class})
+@SuiteClasses({ ClassifierTest.class, NumberTestSuite.class, BowlingGameTestSuite.class})
 public class AllTests {
 
 }

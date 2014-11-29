@@ -7,7 +7,7 @@ import cd.aaa.roomsearch.entity.Hotel;
 import cd.aaa.roomsearch.entity.Room;
 import cd.aaa.roomsearch.entity.RoomType;
 
-public class HotelSearchService {
+public class RandomHotelSearchService {
 
   String[] HOTEL_NAMES = new String[] {"Bristol Hotel", "Park Inn Hotel", "Taj Hotel", "WestInn Hotel",
       "BestInn Hotel", "Hyatt Hotel", "Regency Hotel", "Grand Hotel", "Plaza Hotel", "Fortune Hotel",

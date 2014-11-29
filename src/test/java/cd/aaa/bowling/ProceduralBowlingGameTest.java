@@ -22,25 +22,24 @@ public class ProceduralBowlingGameTest {
 		ProceduralBowlingGame game = new ProceduralBowlingGame(1, 2, 6, 4, 7, 1);
 		assertEquals(28, game.score());
 	}
-	
+
 	@Test
 	public void frameIsASpareWhenAllPinsFallsIn2ThrowsAndTheFirstThrowIsntAStrike() {
 		ProceduralBowlingGame game = new ProceduralBowlingGame(1, 2, 6, 4, 7, 1);
 		assertTrue(game.frameIsSpare(1));
-		
+
 		game = new ProceduralBowlingGame(1, 2, 0, 10, 7, 1);
 		assertTrue(game.frameIsSpare(1));
 
 		game = new ProceduralBowlingGame(1, 2, 10, 0, 7, 1);
 		assertFalse(game.frameIsSpare(1));
 	}
-	
 
 	@Test
 	public void frameIsAStrikeWhenAllPinsFallsInTheFirstThrow() {
 		ProceduralBowlingGame game = new ProceduralBowlingGame(1, 2, 6, 4, 7, 1);
 		assertFalse(game.frameIsStrike(1));
-		
+
 		game = new ProceduralBowlingGame(1, 2, 0, 10, 7, 1);
 		assertFalse(game.frameIsStrike(1));
 
@@ -62,9 +61,9 @@ public class ProceduralBowlingGameTest {
 
 	@Test
 	public void bonusForStrikeFrameCanGoAcrossTwoFrames() {
-		ProceduralBowlingGame game = new ProceduralBowlingGame(10, 0, 10, 0, 10, 0); // 30, 20, 10
-		
-		//all frames are strikes
+		ProceduralBowlingGame game = new ProceduralBowlingGame(10, 0, 10, 0, 10, 0);
+
+		// all frames are strikes
 		assertEquals(10, game.scoreInFrame(0));
 		assertEquals(20, game.bonusForStrike(0));
 
@@ -76,24 +75,24 @@ public class ProceduralBowlingGameTest {
 
 		assertEquals(60, game.score());
 	}
-	
-	
 
 	@Test
 	public void scoreACompleteGameWhereLastFrameIsASpare() {
-		ProceduralBowlingGame game = new ProceduralBowlingGame(1, 4, 4, 5, 6, 4, 5, 5, 10, 0, 0, 1, 7, 3, 6, 4, 10, 0, 2, 8, 6);
+		ProceduralBowlingGame game = new ProceduralBowlingGame(1, 4, 4, 5, 6, 4, 5, 5, 10, 0, 0, 1, 7, 3, 6, 4, 10, 0,
+				2, 8, 6);
 		assertTrue(game.frameIsSpare(9));
-		assertEquals(10,  game.scoreInFrame(9));
-		assertEquals(6,  game.bonusForSpare(9));
+		assertEquals(10, game.scoreInFrame(9));
+		assertEquals(6, game.bonusForSpare(9));
 		assertEquals(133, game.score());
 	}
 
 	@Test
 	public void scoreACompleteGameWhereLastFrameIsAStrike() {
-		ProceduralBowlingGame game = new ProceduralBowlingGame(1, 4, 4, 5, 6, 4, 5, 5, 10, 0, 0, 1, 7, 3, 6, 4, 10, 0, 10, 0, 6);
+		ProceduralBowlingGame game = new ProceduralBowlingGame(1, 4, 4, 5, 6, 4, 5, 5, 10, 0, 0, 1, 7, 3, 6, 4, 10, 0,
+				10, 0, 6);
 		assertTrue(game.frameIsStrike(9));
 		assertEquals(10, game.scoreInFrame(9));
-		assertEquals(6,  game.bonusForStrike(9));
+		assertEquals(6, game.bonusForStrike(9));
 		assertEquals(139, game.score());
 	}
 

@@ -2,29 +2,35 @@ package cd.aaa.bowling;
 
 public class TenthFrame extends Frame {
 
-  @Override
-  public int sumOfTwoThrows() {
-    int index = 0;
-    int total = 0;
+	int thirdChance = 0;
 
-    for (int chance : chances) {
-      if (index < 2) {
-        total += chance;
-      }
-      index++;
-    }
-    
-    return total;
-  }
+	public TenthFrame() {
+		super();
+	}
 
-  @Override
-  public void roll(int fallenPins) {
-    if (chances.size() >= 3) {
-      throw new IllegalArgumentException("cant roll more than thrice in the tenth frame");
-    }
+	public Frame withPins(int... pins) {
+		if (pins.length > 3 || pins.length < 2) {
+			throw new IllegalArgumentException("invalid input");
+		}
 
-    super.roll(fallenPins);
-  }
+		super.withPins(pins[0], pins[1]);
 
+		if (pins.length == 3) {
+			this.thirdChance = pins[2];
+		}
+
+		return this;
+	}
+
+	@Override
+	public int[] getPins() {
+		int[] result = new int[] {super.getPins()[0], super.getPins()[1], thirdChance};
+		return result;
+	}
+
+	@Override
+	public int frameScore() {
+		return super.frameScore() + this.thirdChance;
+	}
 
 }

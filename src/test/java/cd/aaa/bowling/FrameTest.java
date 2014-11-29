@@ -1,112 +1,62 @@
 package cd.aaa.bowling;
 
-import org.junit.Test;
-
 import static org.junit.Assert.*;
 
-import cd.aaa.bowling.Frame;
-import cd.aaa.bowling.NormalFrame;
-import cd.aaa.bowling.TenthFrame;
+import org.junit.Test;
 
 public class FrameTest {
 
-  @Test
-  public void frame_should_record_number_of_fallen_pins() {
-    Frame f = new NormalFrame();
-    f.roll(5);
-    f.roll(4);
+	@Test
+	public void frame_should_record_number_of_fallen_pins() {
+		Frame f = new Frame().withPins(5, 4);
+		assertEquals("count of throws doesnt match", f.frameScore(), 9);
+	}
 
-    assertEquals("count of throws doesnt match", f.frameTotal(), new Integer(9));
+	@Test
+	public void frame_is_spare_when_player_knocks_all_pins_within_two_throws() {
+		Frame f = new Frame().withPins(4, 6);
+		assertTrue(f.isSpare());
+	}
 
-  }
+	@Test
+	public void frame_is_spare_even_when_player_knocks_all_pins_in_the_second_throw() {
+		Frame f = new Frame().withPins(4, 6);
+		assertTrue(f.isSpare());
+	}
 
-  @Test
-  public void normal_frame_should_allow_maximum_of_2_throws() {
-    Frame f = new NormalFrame();
-    f.roll(1);
-    f.roll(3);
+	@Test
+	public void frame_isnt_spare_when_player_doesnt_knock_all_pins() {
+		Frame f = new Frame().withPins(4, 5);
+		assertFalse(f.isSpare());
+	}
 
-    assertEquals("count of throws doesnt match", f.frameTotal(), new Integer(4));
-  }
+	@Test
+	public void frame_is_strike_when_player_knocks_all_pins_in_first_throw() {
+		Frame f = new Frame().withPins(10, 0);
+		assertTrue(f.isStrike());
+		assertFalse(f.isSpare());
+	}
 
+	@Test
+	public void frame_isnt_strike_when_player_doesnt_knock_all_pins_in_first_throw() {
+		Frame f = new Frame().withPins(0, 10);
+		assertFalse(f.isStrike());
+	}
 
-  @Test(expected = IllegalArgumentException.class)
-  public void normal_frame_should_not_allow_more_than_2_throws() {
-    Frame f = new NormalFrame();
-    f.roll(1);
-    f.roll(3);
-    f.roll(5);
-  }
+	@Test(expected = IllegalArgumentException.class)
+	public void frameThrowThrowExceptionWhenTryingToSetMoreThan2Pins() {
+		new Frame().withPins(1, 2, 3);
+	}
 
-  @Test
-  public void tenth_frame_should_allow_maximum_of_3_throws() {
-    Frame f = new TenthFrame();
-    f.roll(1);
-    f.roll(3);
-    f.roll(5);
+	@Test(expected = IllegalArgumentException.class)
+	public void frameThrowThrowExceptionWhenTryingToSetOnly1Pin() {
+		new Frame().withPins(1);
+	}
 
-    assertEquals("count of throws doesnt match", f.frameTotal(), new Integer(9));
-  }
+	@Test
+	public void frameWillOnlyAllow2PinsToBeSet() {
+		Frame f = new Frame().withPins(1, 6);
+		assertEquals(7, f.frameScore());
+	}
 
-  @Test(expected = IllegalArgumentException.class)
-  public void tenth_frame_should_not_allow_more_than_3_throws() {
-    Frame f = new TenthFrame();
-    f.roll(1);
-    f.roll(3);
-    f.roll(5);
-
-    f.roll(2);
-  }
-
-  @Test
-  public void frame_is_spare_when_player_knocks_all_pins_within_two_throws() {
-    Frame f = new NormalFrame();
-    f.roll(4);
-    f.roll(6);
-    assertTrue(f.isSpare());
-    
-    Frame tf = new TenthFrame();
-    tf.roll(4);
-    tf.roll(6);
-    tf.roll(6);
-    assertTrue(tf.isSpare());
-  }
-  
-  @Test
-  public void frame_isnt_spare_when_player_doesnt_knock_all_pins() {
-    Frame f = new NormalFrame();
-    f.roll(4);
-    f.roll(5);
-    assertFalse(f.isSpare());
-  }
-  
-  @Test
-  public void frame_is_strike_when_player_knocks_all_pins_in_first_throw() {
-    Frame f = new NormalFrame();
-    f.roll(10);
-    assertTrue(f.isStrike());
-    assertFalse(f.isSpare());
-    
-    Frame tf = new TenthFrame();
-    tf.roll(10);
-    tf.roll(4);
-    tf.roll(1);
-    assertTrue(tf.isStrike());    
-  }
-  
-  @Test
-  public void frame_isnt_strike_when_player_doesnt_knock_all_pins_in_first_throw() {
-    Frame f = new NormalFrame();
-    f.roll(4);
-    f.roll(6);
-    assertFalse(f.isStrike());
-    
-    Frame tf = new TenthFrame();
-    tf.roll(4);
-    tf.roll(6);
-    tf.roll(6);
-    assertFalse(tf.isStrike());
-  }  
-  
-  
 }

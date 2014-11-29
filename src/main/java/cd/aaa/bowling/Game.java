@@ -1,78 +1,104 @@
 package cd.aaa.bowling;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Game {
 
-  Frame[] playedFrames = new Frame[10];
+	public static int LAST_FRAME_INDEX = 9;
+	List<Frame> playedFrames = new ArrayList<Frame>();
+	Frame EMPTY_FRAME = new Frame().withPins(0, 0);
 
-  public void roll(int frame, int fallenPins) {
-    Frame rolledFrame = null;
-    int adjustedFrame = frame - 1;
+	public Game(int... pins) {
+		int fIndex = 0;
+		int numFrames = pins.length / 2;
 
-    rolledFrame = this.getFrameFor(adjustedFrame);
-    rolledFrame.roll(fallenPins);
-  }
+		while (fIndex < numFrames) {
+			Frame f = FrameFactory.getFrameFor(fIndex);
+			f.withPins(pins[fIndex * 2], pins[fIndex * 2 + 1]);
+			if (fIndex == LAST_FRAME_INDEX && pins.length == 21) {
+				f.withPins(pins[fIndex * 2], pins[fIndex * 2 + 1], pins[fIndex * 2 + 2]);
+			}
+			playedFrames.add(f);
+			fIndex++;
+		}
+	}
 
+	public int score() {
+		return cumulativeScore(playedFrames.size() - 1);
+	}
 
-  protected Frame getFrameFor(int frame) {
+	protected int cumulativeScore(int lastIndex) {
+		int score = 0;
 
-    if (playedFrames[frame] == null) {
-      playedFrames[frame] = FrameFactory.getFrameFor(frame);
-    }
+		for (int frameIndex = 0; frameIndex <= lastIndex; frameIndex++) {
+			Frame f = playedFrames.get(frameIndex);
+			score += f.frameScore();
 
-    return playedFrames[frame];
-  }
+			if (f.isSpare()) {
+				score += bonusForSpareFrameAt(frameIndex);
+			}
 
+			if (f.isStrike()) {
+				score += bonusForStrikeFrameAt(frameIndex);
+			}
+		}
+		return score;
+	}
 
-  public int framesPlayed() {
-    int count = 0;
-    for (Frame f : playedFrames) {
-      if (f != null) {
-        count++;
-      }
-    }
-    return count;
-  }
+	protected int bonusForStrikeFrameAt(int frameIndex) {
+		int bonus = 0;
+		Frame nextFrame = null;
 
+		int nextFrameIndex = frameIndex + 1;
+		nextFrame = safelyGetFrameAt(nextFrameIndex);
 
-  public int gameTotal() {
-    int score = 0;
-    Frame currentFrame = null;
-    Frame nextFrame = null;
+		if (nextFrame instanceof TenthFrame) {
+			bonus = bonusStrikePoints((TenthFrame) nextFrame);
+		} else {
+			bonus = bonusStrikePoints(nextFrameIndex, nextFrame);
+		}
 
-    for (int i = 0; i < playedFrames.length; i++) {
-      currentFrame = playedFrames[i];
-      nextFrame = getNextFrame(i);
+		return bonus;
+	}
 
-      if (currentFrame == null) {
-        break;
-      }
+	protected int bonusStrikePoints(int frameIndex, Frame nextFrame) {
+		int bonus;
+		if (nextFrame.isStrike()) {
+			bonus = nextFrame.frameScore() + safelyGetFrameAt(frameIndex + 1).getPins()[0];
+		} else {
+			bonus = nextFrame.frameScore();
+		}
+		return bonus;
+	}
 
-      score += currentFrame.frameTotal();
+	protected int bonusStrikePoints(TenthFrame frame) {
+		int bonus;
+		if (frame.isStrike()) {
+			bonus = frame.getPins()[0] + frame.getPins()[2];
+		} else {
+			bonus = frame.getPins()[0] + frame.getPins()[1];
+		}
+		return bonus;
+	}
 
-      if (currentFrame.isSpare() && nextFrame != null) {
-        score += nextFrame.getFirstThrow();
-      }
+	protected int bonusForSpareFrameAt(int frameIndex) {
+		return safelyGetFrameAt(frameIndex + 1).getPins()[0];
+	}
 
-      if (currentFrame.isStrike() && nextFrame != null) {
-        score += nextFrame.sumOfTwoThrows();
-      }
+	private boolean pastLastFrame(int frameIndex) {
+		return frameIndex >= playedFrames.size();
+	}
 
-      System.out.println("Cumulative score at frame " + i + " is " + score);
+	public List<Frame> getFrames() {
+		return playedFrames;
+	}
 
-    }
-
-    return score;
-  }
-
-  protected Frame getNextFrame(int i) {
-    Frame nextFrame = null;
-    if (i < playedFrames.length - 1) {
-      nextFrame = playedFrames[i + 1];
-    }
-
-    return nextFrame;
-  }
-
-
+	protected Frame safelyGetFrameAt(int index) {
+		if (pastLastFrame(index)) {
+			return EMPTY_FRAME;
+		}
+		return playedFrames.get(index);
+	}
 
 }

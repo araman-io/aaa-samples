@@ -1,98 +1,120 @@
 package cd.aaa.bowling;
 
+import static org.junit.Assert.*;
+
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-
-import cd.aaa.bowling.Game;
 
 public class GameTest {
 
-  @Test
-  public void should_record_frames() {
-    Game g = new Game();
-    g.roll(1, 3);
-    g.roll(1, 4);
+	@Test
+	public void shouldCreateGameWithASingleFrame() {
+		Game g = new Game(1, 4);
+		assertEquals(1, g.getFrames().size());
+	}
 
-    assertEquals(1, g.framesPlayed());
+	@Test
+	public void shouldCreateGameWithMultipleFrames() {
+		Game g = new Game(1, 4, 4, 5);
+		assertEquals(2, g.getFrames().size());
+	}
 
-    g = new Game();
-    g.roll(1, 3);
-    g.roll(1, 4);
-    g.roll(2, 7);
-    assertEquals(2, g.framesPlayed());
-  }
+	@Test
+	public void shouldCreateGameWithAll10FramesEachWithDoubleThrows() {
+		Game g = new Game(1, 4, 4, 5, 6, 4, 5, 5, 10, 0, 0, 1, 7, 3, 6, 4, 10, 0, 8, 1);
+		assertEquals(10, g.getFrames().size());
+		assertArrayEquals(new int[] { 8, 1, 0 }, g.getFrames().get(9).getPins());
+	}
 
-  @Test
-  public void should_return_0_frames_for_a_new_game() {
-    Game g = new Game();
-    assertEquals(0, g.framesPlayed());
-  }
+	@Test
+	public void shouldCreateGameWithAll10FramesWithTheLastFrameHavingThreeThrows() {
+		Game g = new Game(1, 4, 4, 5, 6, 4, 5, 5, 10, 0, 0, 1, 7, 3, 6, 4, 10, 0, 8, 2, 7);
+		assertEquals(10, g.getFrames().size());
+		assertArrayEquals(new int[] { 8, 2, 7 }, g.getFrames().get(9).getPins());
+	}
 
-  @Test
-  public void should_return_sum_of_all_frames_for_a_game_with_no_strike_or_spare() {
+	@Test
+	public void shouldScoreGamesWithASingleFrame() {
+		Game g = new Game(1, 4);
+		assertEquals(1, g.getFrames().size());
+		assertEquals(5, g.score());
+	}
 
-    Game g = new Game();
+	@Test
+	public void shouldScoreGamesWithMultipleFrame() {
+		Game g = new Game(1, 4, 4, 5, 6, 1);
+		assertEquals(3, g.getFrames().size());
+		assertEquals(21, g.score());
+	}
 
-    g.roll(1, 3);
-    g.roll(1, 4);
+	@Test
+	public void shouldScoreGamesWithASpareFrame() {
+		Game g = new Game(1, 4, 6, 4, 6, 1);
+		assertEquals(3, g.getFrames().size());
+		assertEquals(28, g.score());
+	}
 
-    g.roll(2, 7);
-    g.roll(2, 1);
+	@Test
+	public void shouldScoreGamesWithAStrikeFrame() {
+		Game g = new Game(1, 4, 10, 0, 6, 1);
+		assertEquals(3, g.getFrames().size());
+		assertEquals(29, g.score());
+	}
 
-    g.roll(3, 1);
-    g.roll(3, 1);
+	@Test
+	public void shouldScoreGamesWith2ConsecutiveStrikes() {
+		Game g = new Game(1, 4, 10, 0, 10, 0, 6, 1);
+		assertEquals(4, g.getFrames().size());
+		assertEquals(55, g.score());
+	}
 
-    assertEquals(3, g.framesPlayed());
-    assertEquals(17, g.gameTotal());
-  }
-  
-  @Test
-  public void should_return_sum_of_adjancent_throw_for_a_game_with_a_spare() {
+	@Test
+	public void shouldScoreGamesWith3ConsecutiveStrikes() {
+		Game g = new Game(10, 0, 10, 0, 10, 0, 7, 1);
+		assertEquals(4, g.getFrames().size());
+		assertEquals(83, g.score());
+	}
 
-    Game g = new Game();
+	@Test
+	public void shouldScoreGamesWithConsectutiveSpareFrame() {
+		Game g = new Game(6, 4, 4, 6, 1, 0);
+		assertEquals(3, g.getFrames().size());
+		assertEquals(26, g.score());
+	}
 
-    g.roll(1, 3);
-    g.roll(1, 7);
+	@Test
+	public void shouldScoreGamesEvenWhenLastFrameIsASpare() {
+		Game g = new Game(1, 0, 6, 4);
+		assertEquals(2, g.getFrames().size());
+		assertEquals(11, g.score());
+	}
 
-    g.roll(2, 7);
-    g.roll(2, 1);
+	@Test
+	public void shouldScoreGamesEvenWhenLastFrameIsAStrike() {
+		Game g = new Game(1, 0, 10, 0);
+		assertEquals(2, g.getFrames().size());
+		assertEquals(11, g.score());
+	}
 
-    assertEquals(2, g.framesPlayed());
-    assertEquals(25, g.gameTotal());
-  }
-  
+	@Test
+	public void test3ConsecutiveStrikes() {
+		Game g = new Game(10, 0, 10, 0, 10, 0);
+		assertEquals(3, g.getFrames().size());
+		assertEquals(60, g.score());
+	}
 
-  
-  @Test
-  public void should_return_sum_of_adjancent_2_throws_for_a_game_with_a_strike() {
+	@Test
+	public void scoreACompleteGameWhereLastFrameIsASpare() {
+		Game game = new Game(1, 4, 4, 5, 6, 4, 5, 5, 10, 0, 0, 1, 7, 3, 6, 4, 10, 0, 2, 8, 6);
+		assertEquals(10, game.getFrames().size());
+		assertArrayEquals(new int[] { 2, 8, 6 }, game.getFrames().get(9).getPins());
+		assertEquals(133, game.score());
+	}
 
-    Game g = new Game();
+	@Test
+	public void scoreACompleteGameWhereLastFrameIsAStrike() {
+		Game game = new Game(1, 4, 4, 5, 6, 4, 5, 5, 10, 0, 0, 1, 7, 3, 6, 4, 10, 0, 10, 0, 6);
+		assertEquals(10, game.getFrames().size());
+		assertEquals(139, game.score());
+	}
 
-    g.roll(1, 10);
-
-    g.roll(2, 7);
-    g.roll(2, 1);
-    
-    g.roll(3, 4);
-    g.roll(3, 5);
-
-    assertEquals(3, g.framesPlayed());
-    assertEquals(35, g.gameTotal());
-  }
-  
-  @Test
-  public void should_return_bonus_from_subsequent_frames() {
-    Game g = new Game();
-
-    g.roll(1, 10);
-    g.roll(2, 10);
-    g.roll(3, 1);
-    g.roll(3, 2);
-    
-    assertEquals(3, g.framesPlayed());
-    assertEquals(37, g.gameTotal());
-    
-  }
-  
 }

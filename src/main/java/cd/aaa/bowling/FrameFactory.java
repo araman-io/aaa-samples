@@ -1,21 +1,19 @@
 package cd.aaa.bowling;
 
-
-
 public class FrameFactory {
 
-  public static Frame getFrameFor(int frame) {
+	public static Frame getFrameFor(int frameIndex) {
 
-    if (frame < 0 || frame > 9) {
-      throw new IllegalArgumentException("invalid frame " + frame);
-    }
-    
-    if (frame == 9) {
-      return new TenthFrame();
-    } else {
-      return new NormalFrame();
-    }
-    
-  }
+		if (frameIndex < 0 || frameIndex > Game.LAST_FRAME_INDEX) {
+			throw new IllegalArgumentException("illegal frame index " + frameIndex);
+		}
+		
+		if (frameIndex == Game.LAST_FRAME_INDEX) {
+			return new TenthFrame();
+		} else {
+			return new Frame();
+		}
+
+	}
 
 }

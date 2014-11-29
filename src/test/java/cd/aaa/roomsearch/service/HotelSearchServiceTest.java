@@ -7,15 +7,15 @@ import org.junit.Test;
 
 import cd.aaa.roomsearch.entity.Hotel;
 import cd.aaa.roomsearch.entity.Room;
-import cd.aaa.roomsearch.service.AvailabilityService;
-import cd.aaa.roomsearch.service.HotelSearchService;
+import cd.aaa.roomsearch.service.RandomAvailabilityService;
+import cd.aaa.roomsearch.service.RandomHotelSearchService;
 
 import com.google.gson.Gson;
 
 public class HotelSearchServiceTest {
 
-  HotelSearchService service = new HotelSearchService();
-  AvailabilityService availabilityService = new AvailabilityService();
+  RandomHotelSearchService service = new RandomHotelSearchService();
+  RandomAvailabilityService availabilityService = new RandomAvailabilityService();
 
   @Test
   public void invokeHotelsFor() {

@@ -7,13 +7,13 @@ import java.util.Map;
 import cd.aaa.roomsearch.entity.Hotel;
 import cd.aaa.roomsearch.entity.Room;
 import cd.aaa.roomsearch.entity.RoomSearchRequest;
-import cd.aaa.roomsearch.service.AvailabilityService;
-import cd.aaa.roomsearch.service.HotelSearchService;
+import cd.aaa.roomsearch.service.RandomAvailabilityService;
+import cd.aaa.roomsearch.service.RandomHotelSearchService;
 
 public class RoomSearchService {
 	
-	HotelSearchService hotelService = new HotelSearchService();
-	AvailabilityService availabilityService = new AvailabilityService();
+	RandomHotelSearchService hotelService = new RandomHotelSearchService();
+	RandomAvailabilityService availabilityService = new RandomAvailabilityService();
 
 	public List<Hotel> getAvailableRooms(RoomSearchRequest request) {
 		

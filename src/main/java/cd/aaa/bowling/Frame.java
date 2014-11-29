@@ -1,65 +1,46 @@
 package cd.aaa.bowling;
 
-import java.util.ArrayList;
-import java.util.List;
+public class Frame {
 
-public abstract class Frame {
+	int[] chances = new int[2];
 
-  List<Integer> chances = new ArrayList<Integer>();
+	public Frame() {
+	}
 
-  public void roll(int fallenPins) {
-    chances.add(fallenPins);
-  }
+	public Frame withPins(int... pins) {
+		if (pins.length != 2) {
+			throw new IllegalArgumentException("the number of pins should be exactly 2");
+		}
+		chances = pins;
+		return this;
+	}
+	
+	public int[] getPins() {
+		return this.chances;
+	}
 
-  public Integer frameTotal() {
+	public int frameScore() {
+		int result = 0;
+		for (int i : chances) {
+			result += i;
+		}
+		return result;
+	}
 
-    int result = 0;
+	public boolean isSpare() {
+		boolean spare = false;
+		if (!this.isStrike() && frameScore() == 10) {
+			spare = true;
+		}
+		return spare;
+	}
 
-    for (int i : chances) {
-      result += i;
-    }
-
-    return result;
-  }
-
-  public abstract int sumOfTwoThrows();
-
-  public boolean isSpare() {
-    boolean spare = false;
-    int total = 0;
-    int index = 0;
-    
-    if ( this.isStrike())  {
-      return spare;
-    }
-    
-    for (int chance : chances) {
-      if ( index < 2) {
-        total += chance;
-      }
-      index++;
-    }
-
-    if (total == 10) {
-      spare = true;
-    }
-
-    return spare;
-  }
-
-  public boolean isStrike() {
-    boolean strike = false;
-
-    if (chances.get(0) == 10) {
-      strike = true;
-    }
-
-    return strike;
-  }
-
-  public int getFirstThrow() {
-    return chances.get(0);
-  }
-
+	public boolean isStrike() {
+		boolean strike = false;
+		if (chances[0] == 10) {
+			strike = true;
+		}
+		return strike;
+	}
 
 }

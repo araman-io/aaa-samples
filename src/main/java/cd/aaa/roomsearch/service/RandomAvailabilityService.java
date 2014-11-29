@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Random;
 
 
-public class AvailabilityService {
+public class RandomAvailabilityService {
   
   Random randomizer = new Random();
 
