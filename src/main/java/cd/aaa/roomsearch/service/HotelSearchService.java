@@ -2,7 +2,6 @@ package cd.aaa.roomsearch.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import cd.aaa.roomsearch.entity.Hotel;
 import cd.aaa.roomsearch.entity.Room;

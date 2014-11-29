@@ -1,10 +1,10 @@
 package cd.aaa.roomsearch;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 
-import static org.junit.Assert.*;
-
-import sun.print.resources.serviceui;
 import cd.aaa.roomsearch.entity.Hotel;
 import cd.aaa.roomsearch.entity.RoomSearchRequest;
 import cucumber.api.PendingException;
