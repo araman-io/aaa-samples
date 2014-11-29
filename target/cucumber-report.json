@@ -1,0 +1,205 @@
+[
+  {
+    "id": "room-search-service",
+    "description": "",
+    "name": "Room search service",
+    "keyword": "Feature",
+    "line": 1,
+    "elements": [
+      {
+        "after": [
+          {
+            "result": {
+              "duration": 60437,
+              "status": "passed"
+            },
+            "match": {
+              "location": "RoomSearchSteps.after()"
+            }
+          }
+        ],
+        "id": "room-search-service;basic-room-search-with-valid-inputs",
+        "before": [
+          {
+            "result": {
+              "duration": 378409,
+              "status": "passed"
+            },
+            "match": {
+              "location": "RoomSearchSteps.before()"
+            }
+          }
+        ],
+        "description": "",
+        "name": "Basic Room Search With Valid Inputs",
+        "keyword": "Scenario",
+        "line": 3,
+        "steps": [
+          {
+            "result": {
+              "duration": 533061634,
+              "status": "passed"
+            },
+            "name": "A Guest Trying to Find Rooms",
+            "keyword": "Given ",
+            "line": 4,
+            "match": {
+              "location": "RoomSearchSteps.initSearch()"
+            }
+          },
+          {
+            "result": {
+              "duration": 2764343,
+              "status": "passed"
+            },
+            "name": "They Enter bangalore as the destination",
+            "keyword": "When ",
+            "line": 5,
+            "match": {
+              "arguments": [
+                {
+                  "val": "bangalore",
+                  "offset": 11
+                }
+              ],
+              "location": "RoomSearchSteps.setDestination(String)"
+            }
+          },
+          {
+            "result": {
+              "duration": 97393,
+              "status": "passed"
+            },
+            "name": "1-jan-2016 , 5-Jan-2016 as from and to Dates",
+            "keyword": "And ",
+            "line": 6,
+            "match": {
+              "arguments": [
+                {
+                  "val": "1-jan-2016",
+                  "offset": 0
+                },
+                {
+                  "val": "5-Jan-2016",
+                  "offset": 13
+                }
+              ],
+              "location": "RoomSearchSteps.setDates(String,String)"
+            }
+          },
+          {
+            "result": {
+              "duration": 2907546,
+              "status": "passed"
+            },
+            "name": "We should Return some results",
+            "keyword": "Then ",
+            "line": 7,
+            "match": {
+              "location": "RoomSearchSteps.searchForProperties()"
+            }
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "after": [
+          {
+            "result": {
+              "duration": 110866,
+              "status": "passed"
+            },
+            "match": {
+              "location": "RoomSearchSteps.after()"
+            }
+          }
+        ],
+        "id": "room-search-service;basic-room-search-with-invalid-dates",
+        "before": [
+          {
+            "result": {
+              "duration": 58897,
+              "status": "passed"
+            },
+            "match": {
+              "location": "RoomSearchSteps.before()"
+            }
+          }
+        ],
+        "description": "",
+        "name": "Basic Room Search With Invalid Dates",
+        "keyword": "Scenario",
+        "line": 9,
+        "steps": [
+          {
+            "result": {
+              "duration": 18863,
+              "status": "passed"
+            },
+            "name": "A Guest Trying to Find Rooms",
+            "keyword": "Given ",
+            "line": 10,
+            "match": {
+              "location": "RoomSearchSteps.initSearch()"
+            }
+          },
+          {
+            "result": {
+              "duration": 109712,
+              "status": "passed"
+            },
+            "name": "They Enter bangalore as the destination",
+            "keyword": "When ",
+            "line": 11,
+            "match": {
+              "arguments": [
+                {
+                  "val": "bangalore",
+                  "offset": 11
+                }
+              ],
+              "location": "RoomSearchSteps.setDestination(String)"
+            }
+          },
+          {
+            "result": {
+              "duration": 71216,
+              "status": "passed"
+            },
+            "name": "1-jan-2014 , 5-Jan-2014 as from and to Dates",
+            "keyword": "And ",
+            "line": 12,
+            "match": {
+              "arguments": [
+                {
+                  "val": "1-jan-2014",
+                  "offset": 0
+                },
+                {
+                  "val": "5-Jan-2014",
+                  "offset": 13
+                }
+              ],
+              "location": "RoomSearchSteps.setDates(String,String)"
+            }
+          },
+          {
+            "result": {
+              "duration": 2637308,
+              "status": "pending",
+              "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat cd.aaa.roomsearch.RoomSearchSteps.we_should_Return_an_error_message(RoomSearchSteps.java:60)\r\n\tat ✽.Then We should Return an error message(cd/aaa/roomsearch/AvailableRoomSearchService.feature:13)\r\n"
+            },
+            "name": "We should Return an error message",
+            "keyword": "Then ",
+            "line": 13,
+            "match": {
+              "location": "RoomSearchSteps.we_should_Return_an_error_message()"
+            }
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "uri": "cd/aaa/roomsearch/AvailableRoomSearchService.feature"
+  }
+]
