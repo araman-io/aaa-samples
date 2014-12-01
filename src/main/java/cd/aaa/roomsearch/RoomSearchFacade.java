@@ -10,7 +10,7 @@ import cd.aaa.roomsearch.entity.RoomSearchRequest;
 import cd.aaa.roomsearch.service.RandomAvailabilityService;
 import cd.aaa.roomsearch.service.RandomHotelSearchService;
 
-public class RoomSearchService {
+public class RoomSearchFacade {
 	
 	RandomHotelSearchService hotelService = new RandomHotelSearchService();
 	RandomAvailabilityService availabilityService = new RandomAvailabilityService();
@@ -46,6 +46,11 @@ public class RoomSearchService {
 			ids.add(r.getId());
 		}
 		return ids;
+	}
+	
+	public void setSearchServices(RandomHotelSearchService hotelSearchService, RandomAvailabilityService availabilityService) {
+		this.availabilityService = availabilityService;
+		this.hotelService = hotelSearchService;
 	}
 	
 }

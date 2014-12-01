@@ -17,3 +17,4 @@ target/*
 *.swp
 *.swo
 
+ssh-agent.exe.stackdump

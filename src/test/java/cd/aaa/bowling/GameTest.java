@@ -96,7 +96,7 @@ public class GameTest {
 	}
 
 	@Test
-	public void test3ConsecutiveStrikes() {
+	public void testGameWith3ConsecutiveStrikes() {
 		Game g = new Game(10, 0, 10, 0, 10, 0);
 		assertEquals(3, g.getFrames().size());
 		assertEquals(60, g.score());

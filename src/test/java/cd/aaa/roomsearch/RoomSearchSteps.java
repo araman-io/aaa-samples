@@ -18,7 +18,7 @@ import cucumber.api.java.en.When;
 public class RoomSearchSteps {
 	
 	private RoomSearchRequest request = null;
-	RoomSearchService searchService = new RoomSearchService();
+	RoomSearchFacade searchService = new RoomSearchFacade();
 	
 	@Given("A Guest Trying to Find Rooms") 
 	public void initSearch() {
